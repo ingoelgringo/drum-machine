@@ -31,10 +31,9 @@ h1 {
   font-family: jaroFont;
   text-align: center;
   font-size: 5em;
-  color: #322a1a;
-  background-image: linear-gradient(#322a1a, #7e6f6f);
-  color: transparent;
-  background-clip: text;
+  color: #4f432b;
+  text-shadow: -0.3px -0.3px 0 #000, 0.3px -0.3px 0 #000, -0.3px 0.3px 0 #000,
+    0.3px 0.3px 0 #000;
   user-select: none;
 }
 
@@ -119,42 +118,42 @@ h1 {
   user-select: none;
 }
 
-.set {
+.SET {
   position: absolute;
   top: -23px;
   left: calc(50% - 10px);
 }
-.bd {
+.BD {
   position: absolute;
   top: -7px;
   right: -10px;
 }
-.sd {
+.SD {
   position: absolute;
   top: 25px;
   right: -20px;
 }
-.hh {
+.HH {
   position: absolute;
   bottom: -7px;
   right: -10px;
 }
-.oh {
+.OH {
   position: absolute;
   bottom: -23px;
   left: calc(50% - 10px);
 }
-.cl {
+.CL {
   position: absolute;
   bottom: -7px;
   left: -10px;
 }
-.ht {
+.HT {
   position: absolute;
   top: 25px;
   left: -20px;
 }
-.lt {
+.LT {
   position: absolute;
   top: -7px;
   left: -10px;
@@ -181,35 +180,35 @@ h1 {
   background: #322a1a;
 }
 
-.setDot {
+.SETDot {
   top: 5px;
   left: calc(50% - 3px);
 }
-.bdDot {
+.BDDot {
   top: 10px;
   right: 23%;
 }
-.sdDot {
+.SDDot {
   top: 45%;
   right: 7px;
 }
-.hhDot {
+.HHDot {
   bottom: 10px;
   right: 23%;
 }
-.ohDot {
+.OHDot {
   bottom: 5px;
   left: calc(50% - 3px);
 }
-.clDot {
+.CLDot {
   bottom: 10px;
   left: 23%;
 }
-.htDot {
+.HTDot {
   top: 45%;
   left: 7px;
 }
-.ltDot {
+.LTDot {
   top: 10px;
   left: 23%;
 }
