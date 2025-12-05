@@ -1,0 +1,254 @@
+@font-face {
+  font-family: jaroFont;
+  src: url("../public/font/Jaro/static/Jaro_60pt-Regular.ttf");
+}
+
+@font-face {
+  font-family: sciGoFont;
+  src: url("../public/font/Science_Gothic/static/ScienceGothic-Regular.ttf");
+}
+
+.flexContainer {
+  width: 100vw;
+  height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drumMachine {
+  position: relative;
+  height: 400px;
+  width: 700px;
+  background-color: #b69a67;
+  border-radius: 15px;
+  box-shadow: 0px 0px 7px #998563, 5px 5px 15px #4f432b,
+    inset 3px 3px 10px #d7bb85, inset -3px -3px 10px #322a1a;
+}
+
+h1 {
+  margin: 0;
+  font-family: jaroFont;
+  text-align: center;
+  font-size: 5em;
+  color: #322a1a;
+  background-image: linear-gradient(#322a1a, #7e6f6f);
+  color: transparent;
+  background-clip: text;
+  user-select: none;
+}
+
+.controlPanel {
+  display: flex;
+  gap: 30%;
+  padding: 20px;
+  width: 50%;
+  height: 60%;
+  margin-top: 50px;
+  margin-left: 40px;
+}
+
+.playContainer {
+  width: 75px;
+  height: 75px;
+}
+
+.playNotActive {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #b69a67;
+  border-radius: 5px;
+  box-shadow: -1px -1px 3px #998563, 3px 3px 3px #4f432b,
+    inset 3px 3px 10px #d7bb85, inset -3px -3px 10px #322a1a;
+  cursor: pointer;
+  height: 68px;
+  width: 68px;
+}
+
+.playActive {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border: 1px solid #8f7b57;
+  box-shadow: 2px 2px 13px #603636 inset, inset 1px 1px 7px #ff0000,
+    inset -1px -1px 10px #322a1a;
+  border-radius: 5px;
+}
+
+.playNotActive img {
+  width: 50%;
+  filter: invert(34%) sepia(7%) saturate(1245%) hue-rotate(2deg) brightness(98%)
+    contrast(91%);
+}
+
+.playActive img {
+  width: 50%;
+  filter: invert(23%) sepia(79%) saturate(5439%) hue-rotate(358deg)
+    brightness(102%) contrast(115%);
+}
+
+.knobContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 65px;
+  width: 65px;
+}
+
+.drumActive {
+  font-family: sciGoFont;
+  font-size: 0.5em;
+  color: #322a1a;
+  cursor: pointer;
+  color: #ff4242;
+  user-select: none;
+}
+
+.drumNotActive {
+  font-family: sciGoFont;
+  font-size: 0.5em;
+  color: #322a1a;
+  cursor: pointer;
+  color: #322a1a;
+  user-select: none;
+}
+
+.set {
+  position: absolute;
+  top: -23px;
+  left: calc(50% - 10px);
+}
+.bd {
+  position: absolute;
+  top: -7px;
+  right: -10px;
+}
+.sd {
+  position: absolute;
+  top: 25px;
+  right: -20px;
+}
+.hh {
+  position: absolute;
+  bottom: -7px;
+  right: -10px;
+}
+.oh {
+  position: absolute;
+  bottom: -23px;
+  left: calc(50% - 10px);
+}
+.cl {
+  position: absolute;
+  bottom: -7px;
+  left: -10px;
+}
+.ht {
+  position: absolute;
+  top: 25px;
+  left: -20px;
+}
+.lt {
+  position: absolute;
+  top: -7px;
+  left: -10px;
+}
+
+.knob {
+  /* bottom: 50%;
+  left: 30%; */
+  background-color: #b69a67;
+  border-radius: 50%;
+  box-shadow: -1px -1px 3px #998563, 3px 3px 3px #4f432b,
+    inset 1px 1px 10px #d7bb85, inset -1px -1px 10px #322a1a;
+  height: 60px;
+  width: 60px;
+  margin: 6px;
+  position: relative;
+}
+
+.knobDot {
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  border-radius: 50%;
+  background: #322a1a;
+}
+
+.setDot {
+  top: 5px;
+  left: calc(50% - 3px);
+}
+.bdDot {
+  top: 10px;
+  right: 23%;
+}
+.sdDot {
+  top: 45%;
+  right: 7px;
+}
+.hhDot {
+  bottom: 10px;
+  right: 23%;
+}
+.ohDot {
+  bottom: 5px;
+  left: calc(50% - 3px);
+}
+.clDot {
+  bottom: 10px;
+  left: 23%;
+}
+.htDot {
+  top: 45%;
+  left: 7px;
+}
+.ltDot {
+  top: 10px;
+  left: 23%;
+}
+
+.pads {
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.padContainer {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.padNotActive {
+  background-color: #b69a67;
+  border-radius: 5px;
+  box-shadow: -1px -1px 3px #998563, 3px 3px 3px #4f432b,
+    inset 3px 3px 10px #d7bb85, inset -3px -3px 10px #322a1a;
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+}
+
+.padActive {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #8f7b57;
+  box-shadow: 5px 5px 3px #635a48 inset, inset 1px -1px 10px #d7bb85,
+    inset -1px -1px 10px #322a1a;
+  border-radius: 5px;
+  background-image: linear-gradient(340deg, #ff8c8c, #b69a67, #b69a67);
+}

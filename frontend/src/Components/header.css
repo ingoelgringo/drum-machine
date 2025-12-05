@@ -1,0 +1,16 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  height: 40px;
+  background-color: #637081;
+}
+
+.loginBtn {
+  margin-right: 10px;
+  text-decoration: none;
+  color: black;
+  background-color: aliceblue;
+  border-radius: 5px;
+  padding: 5px;
+}
