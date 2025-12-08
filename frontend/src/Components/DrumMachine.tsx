@@ -9,51 +9,63 @@ type Track = {
   sampler: Tone.Sampler;
 };
 
-type Props = {
-  samples: { url: string; name: string }[];
-  numOfSteps: number;
-};
-
-interface PadType {
-  isActive: boolean;
+interface Sample {
   id: number;
+  url: string;
+  name: string;
+}
+
+interface Sequence {
+  beatId: number;
+  active: boolean;
 }
 interface DrumType {
   isActive: boolean;
   id: string;
+  sequence: Sequence[];
 }
 
-function DrumMachine({ samples, numOfSteps }: Props) {
+function DrumMachine() {
+  const [fullSetISActive, setFullSetIsActive] = useState<boolean>(false);
   const [playActive, setPlayActive] = useState<boolean>(false);
   const [dotPlacement, setDotPlacement] = useState("");
-  const [drumActive, setDrumActive] = useState<DrumType[]>([
-    { isActive: false, id: "SET" },
-    { isActive: false, id: "BD" },
-    { isActive: false, id: "SD" },
-    { isActive: false, id: "HH" },
-    { isActive: false, id: "OH" },
-    { isActive: false, id: "CL" },
-    { isActive: false, id: "HT" },
-    { isActive: false, id: "LT" },
+  const [samples, setSamples] = useState<Sample[]>([
+    {
+      id: 1,
+      url: "../../public/audio/krille/bd.wav",
+      name: "BD",
+    },
+    {
+      id: 2,
+      url: "../../public/audio/krille/sd.wav",
+      name: "SD",
+    },
+    {
+      id: 3,
+      url: "../../public/audio/krille/hh.wav",
+      name: "HH",
+    },
+    {
+      id: 4,
+      url: "../../public/audio/krille/oh.wav",
+      name: "OH",
+    },
   ]);
-  const [padBtn, setPadBtn] = useState<PadType[]>([
-    { isActive: false, id: 1 },
-    { isActive: false, id: 2 },
-    { isActive: false, id: 3 },
-    { isActive: false, id: 4 },
-    { isActive: false, id: 5 },
-    { isActive: false, id: 6 },
-    { isActive: false, id: 7 },
-    { isActive: false, id: 8 },
-    { isActive: false, id: 9 },
-    { isActive: false, id: 10 },
-    { isActive: false, id: 11 },
-    { isActive: false, id: 12 },
-    { isActive: false, id: 13 },
-    { isActive: false, id: 14 },
-    { isActive: false, id: 15 },
-    { isActive: false, id: 16 },
-  ]);
+  const createSequence = () =>
+    Array.from({ length: 16 }, (_, i) => ({
+      beatId: i + 1,
+      active: false,
+    }));
+
+  const drumIds = ["BD", "SD", "HH", "OH", "CL", "HT", "LT"];
+
+  const [drumActive, setDrumActive] = useState<DrumType[]>(
+    drumIds.map((id) => ({
+      id,
+      isActive: false,
+      sequence: createSequence(),
+    }))
+  );
 
   const tracksRef = useRef<Track[]>([]);
   const stepsRef = useRef<HTMLDivElement[][]>([[]]);
@@ -71,22 +83,29 @@ function DrumMachine({ samples, numOfSteps }: Props) {
   };
 
   useEffect(() => {
-    const stepIds = [...Array(numOfSteps).keys()] as const;
+    const stepIds = [...Array(16).keys()] as const;
 
-    tracksRef.current = samples.map((sample, i) => ({
-      id: i,
+    tracksRef.current = samples.map((sample, id) => ({
+      id,
       sampler: new Tone.Sampler({
         urls: { [NOTE]: sample.url },
       }).toDestination(),
     }));
+
     seqRef.current = new Tone.Sequence(
       (time, step) => {
-        tracksRef.current.forEach((trk) => {
-          if (padBtn[step]?.isActive) {
-            trk.sampler.triggerAttack(NOTE, time);
+        const drumsToPlay = fullSetISActive
+          ? drumActive
+          : drumActive.filter((d) => d.isActive);
+
+        drumsToPlay.forEach((drum) => {
+          if (drum.sequence[step]?.active) {
+            const trackIndex = samples.findIndex((s) => s.name === drum.id);
+            if (trackIndex >= 0) {
+              tracksRef.current[trackIndex]?.sampler.triggerAttack(NOTE, time);
+            }
           }
         });
-        console.log(step);
       },
       [...stepIds],
       "16n"
@@ -95,7 +114,7 @@ function DrumMachine({ samples, numOfSteps }: Props) {
       seqRef.current?.dispose();
       tracksRef.current.forEach((trk) => trk.sampler.dispose());
     };
-  }, [samples, numOfSteps, padBtn]);
+  }, [samples, drumActive]);
 
   useEffect(() => {
     drumActive.forEach((drum) => {
@@ -119,21 +138,38 @@ function DrumMachine({ samples, numOfSteps }: Props) {
             </div>
           </div>
           <div className="knobContainer">
+            <div
+              key="SET"
+              className={
+                fullSetISActive ? "SET drumActive" : "SET drumNotActive"
+              }
+              onClick={() => {
+                setFullSetIsActive(!fullSetISActive);
+                setDrumActive(
+                  drumActive.map((drum) => {
+                    return { ...drum, isActive: true };
+                  })
+                );
+              }}
+            >
+              SET
+            </div>
             {drumActive.map((drum) => {
               return (
                 <div
                   key={drum.id}
                   className={
-                    drum.isActive
+                    drum.isActive && !fullSetISActive
                       ? `${drum.id} drumActive`
                       : `${drum.id} drumNotActive`
                   }
                   onClick={() => {
+                    setFullSetIsActive(false);
                     setDrumActive(
-                      drumActive.map(({ id }) =>
-                        id === drum.id
-                          ? { id, isActive: true }
-                          : { id, isActive: false }
+                      drumActive.map((d) =>
+                        d.id === drum.id
+                          ? { ...d, isActive: true }
+                          : { ...d, isActive: false }
                       )
                     );
                   }}
@@ -143,36 +179,44 @@ function DrumMachine({ samples, numOfSteps }: Props) {
               );
             })}
             <div className="knob">
-              <div className={`knobDot ${dotPlacement}Dot`}></div>
+              <div
+                className={
+                  fullSetISActive
+                    ? "knobDot SETDot"
+                    : `knobDot ${dotPlacement}Dot`
+                }
+              ></div>
             </div>
           </div>
         </div>
         <div className="pads">
-          {padBtn.map((pad) => {
-            return (
-              <div key={pad.id} className="padContainer">
-                <div
-                  className={pad.isActive ? "padActive" : "padNotActive"}
-                  onClick={() => {
-                    setPadBtn(
-                      padBtn.map(({ id, isActive }) =>
-                        id === pad.id
-                          ? { id, isActive: !isActive }
-                          : { id, isActive }
-                      )
-                    );
-                  }}
-                  ref={(elm) => {
-                    if (!elm) return;
-                    if (!stepsRef.current[0]) {
-                      stepsRef.current[0] = [];
-                    }
-                    stepsRef.current[0][pad.id] = elm;
-                  }}
-                ></div>
-              </div>
-            );
-          })}
+          {drumActive
+            .find((drum) => drum.isActive)
+            ?.sequence.map((beat) => {
+              return (
+                <div key={beat.beatId} className="padContainer">
+                  <div
+                    className={beat.active ? "padActive" : "padNotActive"}
+                    onClick={() => {
+                      setDrumActive(
+                        drumActive.map((drum) =>
+                          drum.isActive
+                            ? {
+                                ...drum,
+                                sequence: drum.sequence.map((seq) =>
+                                  seq.beatId === beat.beatId
+                                    ? { ...seq, active: !seq.active }
+                                    : seq
+                                ),
+                              }
+                            : drum
+                        )
+                      );
+                    }}
+                  ></div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

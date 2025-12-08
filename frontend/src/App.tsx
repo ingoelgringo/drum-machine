@@ -9,32 +9,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <DrumMachine
-                samples={[
-                  {
-                    url: "../public/audio/krille/bd.wav",
-                    name: "BD",
-                  },
-                  {
-                    url: "../public/audio/krille/hh.wav",
-                    name: "HH",
-                  },
-                  {
-                    url: "../public/audio/krille/oh.wav",
-                    name: "OH",
-                  },
-                  {
-                    url: "../public/audio/krille/sd.wav",
-                    name: "SD",
-                  },
-                ]}
-                numOfSteps={16}
-              />
-            }
-          />
+          <Route path="/" element={<DrumMachine />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
