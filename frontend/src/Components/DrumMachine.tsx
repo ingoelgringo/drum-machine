@@ -26,10 +26,10 @@ interface DrumType {
 }
 
 function DrumMachine() {
-  const [fullSetISActive, setFullSetIsActive] = useState<boolean>(false);
+  const [fullSetISActive, setFullSetIsActive] = useState<boolean>(true);
   const [playActive, setPlayActive] = useState<boolean>(false);
   const [dotPlacement, setDotPlacement] = useState("");
-  const [samples, setSamples] = useState<Sample[]>([
+  const [samples, _setSamples] = useState<Sample[]>([
     {
       id: 1,
       url: "../../public/audio/krille/bd.wav",
@@ -50,6 +50,11 @@ function DrumMachine() {
       url: "../../public/audio/krille/oh.wav",
       name: "OH",
     },
+    {
+      id: 5,
+      url: "../../public/audio/krille/cl.wav",
+      name: "CL",
+    },
   ]);
   const createSequence = () =>
     Array.from({ length: 16 }, (_, i) => ({
@@ -68,7 +73,6 @@ function DrumMachine() {
   );
 
   const tracksRef = useRef<Track[]>([]);
-  const stepsRef = useRef<HTMLDivElement[][]>([[]]);
   const seqRef = useRef<Tone.Sequence | null>(null);
 
   const handleStartClick = async () => {
@@ -114,7 +118,7 @@ function DrumMachine() {
       seqRef.current?.dispose();
       tracksRef.current.forEach((trk) => trk.sampler.dispose());
     };
-  }, [samples, drumActive]);
+  }, [samples, drumActive, fullSetISActive]);
 
   useEffect(() => {
     drumActive.forEach((drum) => {
