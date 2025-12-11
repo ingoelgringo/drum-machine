@@ -1,0 +1,10 @@
+@font-face {
+  font-family: sciGoFont;
+  src: url("../public/font/Science_Gothic/static/ScienceGothic-Regular.ttf");
+}
+
+label,
+select {
+  list-style-type: none;
+  font-family: sciGoFont;
+}
