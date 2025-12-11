@@ -15,14 +15,15 @@ interface Sample {
   name: string;
 }
 
-interface Sequence {
-  beatId: number;
-  active: boolean;
-}
 interface DrumType {
   isActive: boolean;
   id: string;
   sequence: Sequence[];
+}
+
+interface Sequence {
+  beatId: number;
+  active: boolean;
 }
 
 function DrumMachine() {

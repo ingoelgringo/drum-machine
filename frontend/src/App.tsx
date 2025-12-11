@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DrumMachine from "./Components/DrumMachine";
 import Login from "./Components/Login";
 import Header from "./Components/Header";
+import GlobalContext from "./Components/GlobalContext";
 
 function App() {
+  const [loggedInPlayer, setLoggedInPlayer] = useState(null);
   return (
-    <>
+    <GlobalContext.Provider value={{ loggedInPlayer, setLoggedInPlayer }}>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -13,7 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </GlobalContext.Provider>
   );
 }
 

@@ -1,9 +1,19 @@
+@font-face {
+  font-family: sciGoFont;
+  src: url("../public/font/Science_Gothic/static/ScienceGothic-Regular.ttf");
+}
+
 header {
+  font-family: sciGoFont;
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: space-between;
   height: 40px;
   background-color: #637081;
+}
+
+label {
+  margin-left: 10px;
 }
 
 .loginBtn {
