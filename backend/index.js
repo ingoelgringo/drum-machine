@@ -18,6 +18,12 @@ app.get("/api/player", async (_request, response) => {
     const { rows } = await client.query("SELECT * FROM player JOIN beat ON beat.player_id=player.playerId;");
     response.send(rows);
 });
+app.get("/api/login/:name/:password", async (request, response) => {
+    const { name, password } = request.params;
+    console.log("name: ", name, "password: ", password);
+    const { rows } = await client.query("SELECT playerId FROM player WHERE player.userName=$1 AND player.playerPass=$2;", [name, password]);
+    response.send(rows);
+});
 app.get("/api/beat/:id", async (request, response) => {
     const { id } = request.params;
     console.log("ID: ", id);

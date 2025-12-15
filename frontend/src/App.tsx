@@ -6,9 +6,10 @@ import Header from "./Components/Header";
 import GlobalContext from "./Components/GlobalContext";
 
 function App() {
-  const [loggedInPlayer, setLoggedInPlayer] = useState(null);
+  const [loggedInPlayer, setLoggedInPlayer] = useState<number | null>(null);
+  const [loadedBeat, setLoadedBeat ] = useState<string>("")
   return (
-    <GlobalContext.Provider value={{ loggedInPlayer, setLoggedInPlayer }}>
+    <GlobalContext.Provider value={{ loggedInPlayer, setLoggedInPlayer, loadedBeat, setLoadedBeat}}>
       <BrowserRouter>
         <Header />
         <Routes>

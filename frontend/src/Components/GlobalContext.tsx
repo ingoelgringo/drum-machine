@@ -1,9 +1,11 @@
-import { type Dispatch, type SetStateAction, createContext } from "react";
+import { createContext, type SetStateAction, type Dispatch } from "react";
 
 const GlobalContext = createContext(
   null as unknown as {
     loggedInPlayer: number | null;
-    setLoggedInPlayer: Dispatch<SetStateAction<number | null>>;
+    setLoggedInPlayer: (id: number | null) => void;
+    loadedBeat: string;
+    setLoadedBeat: Dispatch<SetStateAction<string>>;
   }
 );
 

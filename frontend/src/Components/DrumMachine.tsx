@@ -1,6 +1,7 @@
-import "./drumMachine.css";
-import { useEffect, useRef, useState } from "react";
+import "./css/drumMachine.css";
+import { useEffect, useRef, useState, useContext } from "react";
 import * as Tone from "tone";
+import GlobalContext from "./GlobalContext";
 
 const NOTE = "C2";
 
@@ -26,7 +27,12 @@ interface Sequence {
   active: boolean;
 }
 
+type BeatSeq = {
+  [key: string]: string;
+};
+
 function DrumMachine() {
+  const { loggedInPlayer, loadedBeat } = useContext(GlobalContext);
   const [fullSetISActive, setFullSetIsActive] = useState<boolean>(true);
   const [playActive, setPlayActive] = useState<boolean>(false);
   const [dotPlacement, setDotPlacement] = useState("");
@@ -75,6 +81,7 @@ function DrumMachine() {
 
   const tracksRef = useRef<Track[]>([]);
   const seqRef = useRef<Tone.Sequence | null>(null);
+  const [beat, setBeat] = useState<BeatSeq>({ "": "" });
 
   const handleStartClick = async () => {
     if (Tone.Transport.state === "started") {
@@ -86,6 +93,48 @@ function DrumMachine() {
       setPlayActive(true);
     }
   };
+
+  function convert(input: BeatSeq): DrumType[] {
+    return Object.entries(input).map(([id, sequenceString]) => {
+      const sequenceJson = sequenceString.replace(/(\d+):/g, '"$1":');
+      const parsed = JSON.parse(sequenceJson) as Record<string, boolean>;
+      console.log("parsed: ", parsed);
+      const sequence: Sequence[] = Object.entries(parsed).map(
+        ([beatId, active]) => ({
+          beatId: Number(beatId),
+          active,
+        })
+      );
+
+      return {
+        id,
+        isActive: false,
+        sequence,
+      };
+    });
+  }
+
+  useEffect(() => {
+    console.log("BEAT-INFO: ", beat, "drumActive: ", drumActive);
+  }, [beat]);
+
+  //* HÄMTA BEAT
+  useEffect(() => {
+    if (loggedInPlayer) {
+      console.log("loggedInPlayer: ", loggedInPlayer);
+      fetch(`/api/beat/${loggedInPlayer}`)
+        .then((respone) => respone.json())
+        .then((data) => {
+          data.map((b) => {
+            console.log("b.beatname: ", b.beatname, "loadedBeat: ", loadedBeat);
+            if (b.beatname === loadedBeat) {
+              const beatSeq = convert(b.beatsequence);
+              setDrumActive(beatSeq);
+            }
+          });
+        });
+    }
+  }, [loggedInPlayer, loadedBeat]);
 
   useEffect(() => {
     const stepIds = [...Array(16).keys()] as const;
