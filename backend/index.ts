@@ -23,7 +23,6 @@ app.get("/api/player", async (_request, response) => {
 
 app.get("/api/login/:name/:password", async (request, response) => {
   const { name, password } = request.params;
-  console.log("name: ", name, "password: ", password);
   const { rows } = await client.query(
     "SELECT playerId FROM player WHERE player.userName=$1 AND player.playerPass=$2;",
     [name, password]
@@ -33,7 +32,6 @@ app.get("/api/login/:name/:password", async (request, response) => {
 
 app.get("/api/beat/:id", async (request, response) => {
   const { id } = request.params;
-  console.log("ID: ", id);
 
   const { rows } = await client.query(
     "SELECT * FROM beat WHERE player_id = $1",

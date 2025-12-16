@@ -38,15 +38,15 @@ describe("template spec", () => {
     cy.get("[data-cy=LT]").should("have.css", "color", "rgb(255, 66, 66)");
   });
 
-  //! CYPRESS CANT HANDLE THIS TEST:
-
   it("login and choose beat", () => {
     cy.get("[data-cy=LOGIN]").click();
     cy.get("[data-cy=nameInput]").type("Ingo");
     cy.get("[data-cy=pswInput]").type("password1");
     cy.get("[data-cy=inlogBtn]").click();
     cy.get("[data-cy=beat]").select("Conga");
+    cy.wait(1000); // had to wait for response
     cy.get("[data-cy=BD]").click();
+    cy.wait(1000); // had to wait for response
     cy.get("[data-cy=1]").should(
       "have.css",
       "background-image",

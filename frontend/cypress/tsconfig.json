@@ -46,7 +46,7 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "../src/Components/BeatLibrary.cy.tsx",
+    "../component/BeatLibrary.cy.tsx",
     "../src/Components/BeatLibrary.tsx"
   ]
 }
