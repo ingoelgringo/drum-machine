@@ -255,6 +255,7 @@ function DrumMachine() {
               return (
                 <div key={beat.beatId} className="padContainer">
                   <div
+                    data-cy={beat.beatId}
                     className={beat.active ? "padActive" : "padNotActive"}
                     onClick={() => {
                       setDrumActive(
@@ -272,7 +273,6 @@ function DrumMachine() {
                         )
                       );
                     }}
-                    data-cy={beat.beatId}
                   ></div>
                 </div>
               );

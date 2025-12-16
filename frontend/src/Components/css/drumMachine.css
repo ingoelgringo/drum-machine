@@ -104,7 +104,7 @@ h1 {
   font-family: sciGoFont;
   font-size: 0.5em;
   cursor: pointer;
-  color: rgb(255, 66, 66);
+  color: #ff4242;
   user-select: none;
 }
 
@@ -112,7 +112,7 @@ h1 {
   font-family: sciGoFont;
   font-size: 0.5em;
   cursor: pointer;
-  color: rgb(50, 42, 26);
+  color: #322a1a;
   user-select: none;
 }
 
@@ -230,7 +230,7 @@ h1 {
 }
 
 .padNotActive {
-  background-color: #b69a67;
+  background-color: rgb(182, 154, 103);
   border-radius: 5px;
   box-shadow: -1px -1px 3px #998563, 3px 3px 3px #4f432b,
     inset 3px 3px 10px #d7bb85, inset -3px -3px 10px #322a1a;
@@ -247,5 +247,10 @@ h1 {
   box-shadow: 5px 5px 3px #635a48 inset, inset 1px -1px 10px #d7bb85,
     inset -1px -1px 10px #322a1a;
   border-radius: 5px;
-  background-image: linear-gradient(340deg, #ff8c8c, #b69a67, #b69a67);
+  background-image: linear-gradient(
+    340deg,
+    rgb(255, 140, 140),
+    rgb(182, 154, 103),
+    rgb(182, 154, 103)
+  );
 }
