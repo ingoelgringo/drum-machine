@@ -43,5 +43,10 @@
     "allowImportingTsExtensions": true,
     "noEmit": true
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "../src/Components/BeatLibrary.cy.tsx",
+    "../src/Components/BeatLibrary.tsx"
+  ]
 }

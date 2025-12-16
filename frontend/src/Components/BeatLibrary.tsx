@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import "./css/beatLibrary.css";
-import GlobalContext from "./GlobalContext";
+import GlobalContext from "./GlobalContext.tsx";
 
 interface Beats {
   beatid: number;
@@ -16,6 +16,7 @@ function BeatLibrary() {
   const [beats, setBeats] = useState<Beats[]>();
 
   const handleBeatSelect = (name: string) => {
+    console.log("BeatLibrary-row19, handleBeatSelect, name:", name);
     setLoadedBeat(name);
   };
 
@@ -34,20 +35,15 @@ function BeatLibrary() {
     <>
       <label>
         BEATS
-        <select data-cy="beat">
-          {beats?.map((beat) => {
-            return (
-              <option
-                key={beat.beatid}
-                value={beat.beatname}
-                onClick={() => {
-                  handleBeatSelect(beat.beatname);
-                }}
-              >
-                {beat.beatname}
-              </option>
-            );
-          })}
+        <select
+          data-cy="beat"
+          onChange={(e) => handleBeatSelect(e.target.value)}
+        >
+          {beats?.map((beat) => (
+            <option key={beat.beatid} value={beat.beatname}>
+              {beat.beatname}
+            </option>
+          ))}
         </select>
       </label>
     </>

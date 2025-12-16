@@ -180,6 +180,10 @@ function DrumMachine() {
     });
   });
 
+  useEffect(() => {
+    console.log("drumActive: ", drumActive);
+  }, [drumActive]);
+
   return (
     <div className="flexContainer">
       <div className="drumMachine">
