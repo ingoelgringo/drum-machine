@@ -34,7 +34,7 @@ function BeatLibrary() {
     <>
       <label>
         BEATS
-        <select>
+        <select data-cy="beat">
           {beats?.map((beat) => {
             return (
               <option

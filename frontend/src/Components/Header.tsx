@@ -6,7 +6,7 @@ function Header() {
   return (
     <header>
       <BeatLibrary />
-      <Link to="/login" className="loginBtn">
+      <Link data-cy="LOGIN" to="/login" className="loginBtn">
         LOGIN
       </Link>
     </header>

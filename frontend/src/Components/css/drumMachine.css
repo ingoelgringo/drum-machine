@@ -103,18 +103,16 @@ h1 {
 .drumActive {
   font-family: sciGoFont;
   font-size: 0.5em;
-  color: #322a1a;
   cursor: pointer;
-  color: #ff4242;
+  color: rgb(255, 66, 66);
   user-select: none;
 }
 
 .drumNotActive {
   font-family: sciGoFont;
   font-size: 0.5em;
-  color: #322a1a;
   cursor: pointer;
-  color: #322a1a;
+  color: rgb(50, 42, 26);
   user-select: none;
 }
 

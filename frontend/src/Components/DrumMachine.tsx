@@ -216,6 +216,7 @@ function DrumMachine() {
               return (
                 <div
                   key={drum.id}
+                  data-cy={drum.id}
                   className={
                     drum.isActive && !fullSetISActive
                       ? `${drum.id} drumActive`
@@ -271,12 +272,14 @@ function DrumMachine() {
                         )
                       );
                     }}
+                    data-cy={beat.beatId}
                   ></div>
                 </div>
               );
             })}
         </div>
       </div>
+      {/* {loadedBeat && <p>{JSON.stringify(drumActive)}</p>} */}
     </div>
   );
 }
