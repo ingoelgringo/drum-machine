@@ -1,30 +1,51 @@
 import Login from "../../src/components/Login.tsx";
+import { BrowserRouter } from "react-router-dom";
+import GlobalContext from "../../src/Components/GlobalContext.tsx";
 
 describe("<Login />", () => {
+  beforeEach(() => {
+    cy.mount(
+      <GlobalContext.Provider
+        value={{
+          loggedInPlayer: null,
+          setLoggedInPlayer: () => {},
+          loadedBeat: "",
+          setLoadedBeat: () => {},
+        }}
+      >
+        <BrowserRouter>
+          <Login />;
+        </BrowserRouter>
+      </GlobalContext.Provider>
+    );
+  });
+
   it("includes", () => {
-    cy.mount(<Login />);
-    cy.get("#nameInput").should("be.visible");
-    cy.get("#pswInput").should("be.visible");
-    cy.get("button").should("be.visible");
-    cy.get("link").contains("Sign up");
+    cy.get("[data-cy=nameInput]").should("be.visible");
+    cy.get("[data-cy=pswInput]").should("be.visible");
+    cy.get("[data-cy=inlogBtn]").should("be.visible");
   });
-  it("sign up", () => {
-    cy.mount(<Login />);
-    cy.get("link").click();
-    cy.get("#nameInput").should("be.visible");
-    cy.get("#pswInput").should("be.visible");
-    cy.get("button").should("be.visible");
-    cy.get("link").contains("Log in");
+
+  it("login", () => {
+    cy.get("[data-cy=nameInput]").type("Ingo");
+    cy.get("[data-cy=pswInput]").type("password1");
+    cy.get("[data-cy=inlogBtn]").click();
+    cy.location("pathname").should("eq", "/");
   });
+
   it("need to fill form", () => {
-    cy.get("button").click();
-    cy.get("#message").contains("You need to fill out name and password!");
+    cy.get("[data-cy=inlogBtn]").click();
+    cy.get("[data-cy=errorMessage]").contains(
+      "You need to fill out name and password!"
+    );
   });
+
   it("create account", () => {
-    cy.get("link").click();
-    cy.get("#nameInput").type("JohnDoe");
-    cy.get("#pswInput").type("Password1");
-    cy.get("button").click();
-    cy.get("#message").contains("You've successfully created an account'!");
+    cy.get("[data-cy=nameInput]").type("JohnDoe");
+    cy.get("[data-cy=pswInput]").type("password1");
+    cy.get("[data-cy=createBtn]").click();
+    cy.get("[data-cy=successMessage]").contains(
+      "You have successfully created an account!"
+    );
   });
 });

@@ -31,12 +31,19 @@ type BeatSeq = {
   [key: string]: string;
 };
 
+interface BeatFetch {
+  beatid: number;
+  beatname: string;
+  beatsequence: BeatSeq;
+  player_id: number;
+}
+
 function DrumMachine() {
   const { loggedInPlayer, loadedBeat } = useContext(GlobalContext);
   const [fullSetISActive, setFullSetIsActive] = useState<boolean>(true);
   const [playActive, setPlayActive] = useState<boolean>(false);
   const [dotPlacement, setDotPlacement] = useState("");
-  const [samples, _setSamples] = useState<Sample[]>([
+  const samples: Sample[] = [
     {
       id: 1,
       url: "../../public/audio/krille/bd.wav",
@@ -62,7 +69,7 @@ function DrumMachine() {
       url: "../../public/audio/krille/cl.wav",
       name: "CL",
     },
-  ]);
+  ];
   const createSequence = () =>
     Array.from({ length: 16 }, (_, i) => ({
       beatId: i + 1,
@@ -81,7 +88,6 @@ function DrumMachine() {
 
   const tracksRef = useRef<Track[]>([]);
   const seqRef = useRef<Tone.Sequence | null>(null);
-  const [beat, setBeat] = useState<BeatSeq>({ "": "" });
 
   const handleStartClick = async () => {
     if (Tone.Transport.state === "started") {
@@ -114,10 +120,6 @@ function DrumMachine() {
     });
   }
 
-  useEffect(() => {
-    console.log("BEAT-INFO: ", beat, "drumActive: ", drumActive);
-  }, [beat]);
-
   //* HÄMTA BEAT
   useEffect(() => {
     if (loggedInPlayer) {
@@ -125,7 +127,8 @@ function DrumMachine() {
       fetch(`/api/beat/${loggedInPlayer}`)
         .then((respone) => respone.json())
         .then((data) => {
-          data.map((b) => {
+          console.log("DATA: ", data);
+          data.map((b: BeatFetch) => {
             console.log("b.beatname: ", b.beatname, "loadedBeat: ", loadedBeat);
             if (b.beatname === loadedBeat) {
               const beatSeq = convert(b.beatsequence);
@@ -168,7 +171,8 @@ function DrumMachine() {
       seqRef.current?.dispose();
       tracksRef.current.forEach((trk) => trk.sampler.dispose());
     };
-  }, [samples, drumActive, fullSetISActive]);
+    //eslint-disable-next-line
+  }, [drumActive, fullSetISActive]);
 
   useEffect(() => {
     drumActive.forEach((drum) => {
