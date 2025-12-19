@@ -283,7 +283,6 @@ function DrumMachine() {
             })}
         </div>
       </div>
-      {/* {loadedBeat && <p>{JSON.stringify(drumActive)}</p>} */}
     </div>
   );
 }
