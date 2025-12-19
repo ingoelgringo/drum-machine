@@ -16,13 +16,11 @@ function BeatLibrary() {
   const [beats, setBeats] = useState<Beats[]>();
 
   const handleBeatSelect = (name: string) => {
-    console.log("BeatLibrary-row19, handleBeatSelect, name:", name);
     setLoadedBeat(name);
   };
 
   useEffect(() => {
     if (loggedInPlayer) {
-      console.log("loggedInPlayer: ", loggedInPlayer);
       fetch(`/api/beat/${loggedInPlayer}`)
         .then((respone) => respone.json())
         .then((data) => {

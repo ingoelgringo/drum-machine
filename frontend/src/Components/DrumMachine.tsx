@@ -104,7 +104,6 @@ function DrumMachine() {
     return Object.entries(input).map(([id, sequenceString]) => {
       const sequenceJson = sequenceString.replace(/(\d+):/g, '"$1":');
       const parsed = JSON.parse(sequenceJson) as Record<string, boolean>;
-      console.log("parsed: ", parsed);
       const sequence: Sequence[] = Object.entries(parsed).map(
         ([beatId, active]) => ({
           beatId: Number(beatId),
@@ -123,13 +122,10 @@ function DrumMachine() {
   //* HÄMTA BEAT
   useEffect(() => {
     if (loggedInPlayer) {
-      console.log("loggedInPlayer: ", loggedInPlayer);
       fetch(`/api/beat/${loggedInPlayer}`)
         .then((respone) => respone.json())
         .then((data) => {
-          console.log("DATA: ", data);
           data.map((b: BeatFetch) => {
-            console.log("b.beatname: ", b.beatname, "loadedBeat: ", loadedBeat);
             if (b.beatname === loadedBeat) {
               const beatSeq = convert(b.beatsequence);
               setDrumActive(beatSeq);
@@ -179,10 +175,6 @@ function DrumMachine() {
       if (drum.isActive) setDotPlacement(drum.id);
     });
   });
-
-  useEffect(() => {
-    console.log("drumActive: ", drumActive);
-  }, [drumActive]);
 
   return (
     <div className="flexContainer">
